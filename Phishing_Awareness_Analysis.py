@@ -73,28 +73,28 @@ def analyze_message(message):
         "t.co"
     ]
 
-    # Low Risk Detection
+  
     for keyword in low_risk_keywords:
         if keyword in message_lower:
             red_flags.append(f"Low Risk Keyword: {keyword}")
             explanations_found.append(explanations[keyword])
             risk_score += 5
 
-    # Medium Risk Detection
+   
     for keyword in medium_risk_keywords:
         if keyword in message_lower:
             red_flags.append(f"Medium Risk Keyword: {keyword}")
             explanations_found.append(explanations[keyword])
             risk_score += 10
 
-    # High Risk Detection
+
     for keyword in high_risk_keywords:
         if keyword in message_lower:
             red_flags.append(f"High Risk Keyword: {keyword}")
             explanations_found.append(explanations[keyword])
             risk_score += 20
 
-    # Suspicious Shortened URLs
+    
     for domain in suspicious_domains:
         if domain in message_lower:
             red_flags.append(f"Suspicious Domain: {domain}")
@@ -103,7 +103,7 @@ def analyze_message(message):
             )
             risk_score += 20
 
-    # Regex URL Detection
+
     urls = re.findall(
         r'https?://\S+|www\.\S+',
         message
@@ -116,7 +116,6 @@ def analyze_message(message):
         )
         risk_score += 15
 
-    # Social Engineering - Urgency
     if (
         "urgent" in message_lower or
         "immediately" in message_lower
@@ -129,7 +128,7 @@ def analyze_message(message):
         )
         risk_score += 15
 
-    # Suspicious Attachments
+ 
     suspicious_files = [
         ".exe",
         ".zip",
@@ -147,7 +146,7 @@ def analyze_message(message):
             )
             risk_score += 20
 
-    # Excessive Exclamation Marks
+    
     if message.count("!") > 2:
         red_flags.append(
             "Social Engineering: Excessive Exclamation Marks"
@@ -157,7 +156,7 @@ def analyze_message(message):
         )
         risk_score += 10
 
-    # Excessive Capital Letters
+
     capital_count = sum(
         1 for char in message
         if char.isupper()
@@ -177,7 +176,7 @@ def analyze_message(message):
     return red_flags, explanations_found, risk_score
 
 
-# Main Program
+
 print("=" * 60)
 print("THREAT ANALYZER")
 print("=" * 60)
@@ -188,7 +187,7 @@ message = input(
 
 results, reasons, risk_score = analyze_message(message)
 
-# Verdict
+
 if risk_score >= 60:
     verdict = "HIGH RISK"
 elif risk_score >= 30:
@@ -210,14 +209,14 @@ if results:
 else:
     print("\n✅ No Threats Detected")
 
-# Summary
+
 print("\nSUMMARY")
 print("-" * 60)
 print("Total Threats Found:", len(results))
 print("Risk Score:", risk_score, "/100")
 print("Threat Level:", verdict)
 
-# Recommendations
+
 print("\nSECURITY RECOMMENDATIONS")
 print("-" * 60)
 
@@ -236,7 +235,7 @@ else:
     print("• No major phishing indicators found.")
     print("• Continue following safe online practices.")
 
-# Save Report
+
 try:
     with open(
         "phishing_report.txt",
